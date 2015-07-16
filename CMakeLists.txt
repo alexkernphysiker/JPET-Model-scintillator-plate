@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 2.6)
+project(PlateStecintillator)
+add_subdirectory(RectangularScintillator)
+include_directories(RectangularScintillator)
+set(CMAKE_CXX_FLAGS "-pthread -std=gnu++11")
+add_executable(test_scin platemodel.cpp)
+target_link_libraries(test_scin rectscin)
