@@ -8,9 +8,9 @@ using namespace std;
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
 	double length=100;
-	double width=10;
+	double width=20;
 	double height=5;
-	double step=5;
+	double step=20;
 	
 	BC420 scintillator({make_pair(0,length),make_pair(0,width),make_pair(0,height)});
 	
@@ -30,6 +30,6 @@ int main(int,char**){
 		time<<make_pair(x,phm->timer().average());
 		timeerror<<make_pair(x,phm->timer().sigma());
 	}
-	PlotTbl().WithErrorOnX("Photoelectrons",static_left(count),[&counterror](double x){return counterror(x);});
-	PlotTbl().WithErrorOnX("Time",static_left(time),[&timeerror](double x){return timeerror(x);});
+	PlotTbl().WithErrorOnX("Photoelectrons",static_left(count),counterror.func());
+	PlotTbl().WithErrorOnX("Time",static_left(time),timeerror.func());
 }
