@@ -7,37 +7,44 @@
 using namespace std;
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
-	double length=100;
-	double width=20;
-	double height=5;
-	double step=20;
+	Vec ScinSize={300,300,4};
+	double step=4;
 	printf("CREATE\n");
-	BC420 scintillator({make_pair(0,length),make_pair(0,width),make_pair(0,height)});
-	typedef shared_ptr<SiliconPhm> PHM;vector<PHM> matrix;
-	for(double x=step/2.0;x<length;x+=step)matrix.push_back(TestPhm({x,width/2.0},step));
-	for(PHM phm:matrix)scintillator.Surface(2,RectDimensions::Left)<<phm;
+	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(-ScinSize[2]/2.0,ScinSize[2]/2.0)});
+	typedef shared_ptr<SiliconPhm> PHM;vector<PHM> matrix[2][2];
+	for(unsigned int dimension=0;dimension<2;dimension++)
+		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;side=static_cast<decltype(side)>(side+1))
+			for(double x=step/2.0;x<ScinSize[dimension];x+=step){
+				auto phm=Hamamatsu_12572_100P({x,0},1);
+				matrix[dimension][side].push_back(phm);
+				scintillator.Surface(dimension,side)<<phm;
+			}
 	printf("BEGIN\n");
-	for(unsigned int cnt=0;cnt<250;cnt++){
-		scintillator.RegisterGamma({length/2.0,width/2.0,height/2.0},3000);
+	for(unsigned int cnt=0;cnt<100;cnt++){
+		scintillator.RegisterGamma({ScinSize[0]/2.0,ScinSize[1]/2.0,0},3000);
 		printf("N=%i\r",cnt+1);
 	}
 	printf("FILL\n");
 	typedef LinearInterpolation<double> Tbl;
 	typedef PlotPoints<double,Tbl> PlotTbl;
-	Tbl count,counterror,time,timeerror;
-	for(PHM phm:matrix){
-		double x=phm->pos()[0];
-		if(phm->counter().events_count()>=2){
-			count<<make_pair(x,phm->counter().average());
-			counterror<<make_pair(x,phm->counter().sigma());
-		}
-		if(phm->timer().events_count()>=2){
-			time<<make_pair(x,phm->timer().average());
-			timeerror<<make_pair(x,phm->timer().sigma());
-		}
-	}
+	vector<string> ax_n={"X-","Y-"},side_n={"left","right"};
+	Tbl cntplots[2][2],cnterrors[2][2],timeplots[2][2],timeerrors[2][2];
+	for(unsigned int dimension=0;dimension<2;dimension++)
+		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;side=static_cast<decltype(side)>(side+1))
+			for(PHM phm:matrix[dimension][side]){
+				cntplots[dimension][side]<<make_pair(phm->pos()[0],phm->counter().average());
+				cnterrors[dimension][side]<<make_pair(phm->pos()[0],phm->counter().sigma());
+				if(phm->timer().events_count()>=2){
+					timeplots[dimension][side]<<make_pair(phm->pos()[0],phm->timer().average());
+					timeerrors[dimension][side]<<make_pair(phm->pos()[0],phm->timer().sigma());
+				}
+			}
 	printf("PLOT\n");
-	PlotTbl().WithErrorOnX("Photoelectrons",static_left(count),counterror.func());
-	PlotTbl().WithErrorOnX("Time",static_left(time),timeerror.func());
+	PlotTbl Counts,Times;
+	for(unsigned int dimension=0;dimension<2;dimension++)
+		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;side=static_cast<decltype(side)>(side+1)){
+			Counts.WithErrorOnX(ax_n[dimension]+side_n[side]+"-count",static_cast<Tbl&&>(cntplots[dimension][side]),cnterrors[dimension][side].func());
+			Times.WithErrorOnX(ax_n[dimension]+side_n[side]+"-time",static_cast<Tbl&&>(timeplots[dimension][side]),timeerrors[dimension][side].func());
+		}
 	printf("END\n");
 }
