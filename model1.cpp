@@ -20,7 +20,7 @@ int main(int,char**){
 				scintillator.Surface(dimension,side)<<phm;
 			}
 	printf("BEGIN\n");
-	for(unsigned int cnt=0;cnt<100;cnt++){
+	for(unsigned int cnt=0;cnt<5000;cnt++){
 		scintillator.RegisterGamma({ScinSize[0]/2.0,ScinSize[1]/2.0,0},3000);
 		printf("N=%i\r",cnt+1);
 	}
