@@ -30,7 +30,7 @@ int main(int,char**){
 	vector<string> ax_n={"X-","Y-"},side_n={"left","right"};
 	Tbl cntplots[2][2],cnterrors[2][2],timeplots[2][2],timeerrors[2][2],events[2][2];
 	for(unsigned int dimension=0;dimension<2;dimension++)
-		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;side=static_cast<decltype(side)>(side+1))
+		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side))
 			for(PHM phm:matrix[dimension][side]){
 				events[dimension][side]<<make_pair(phm->pos()[0],phm->timer().events_count());
 				cntplots[dimension][side]<<make_pair(phm->pos()[0],phm->counter().average());
