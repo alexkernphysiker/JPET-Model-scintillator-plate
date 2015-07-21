@@ -137,15 +137,11 @@ LinearInterpolation<double> Absorption({
 	make_pair(597.876,0.002),
 	make_pair(625.29, 0.002)
 });
-RandomValueGenerator<double> GetLambdaDistribution(){
-	RandomValueGenerator<double> gen([LAMBDA](double lambda){return LAMBDA(lambda);},LAMBDA.min(),LAMBDA.max(),200);
-	return gen;
-}
 BC420::BC420(vector<Pair>&&dimensions):
 	RectangularScintillator(
-		static_left(dimensions),
+		static_right(dimensions),
 		TimeDistribution2(0.005,0.2,1.5),
-		GetLambdaDistribution(),
+		RandomValueGenerator<double>([](double lambda){return LAMBDA(lambda);},LAMBDA.min(),LAMBDA.max(),200),
 		refraction,Absorption.func()
 	){
 }

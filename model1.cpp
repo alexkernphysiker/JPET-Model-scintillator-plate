@@ -28,10 +28,11 @@ int main(int,char**){
 	typedef LinearInterpolation<double> Tbl;
 	typedef PlotPoints<double,Tbl> PlotTbl;
 	vector<string> ax_n={"X-","Y-"},side_n={"left","right"};
-	Tbl cntplots[2][2],cnterrors[2][2],timeplots[2][2],timeerrors[2][2];
+	Tbl cntplots[2][2],cnterrors[2][2],timeplots[2][2],timeerrors[2][2],events[2][2];
 	for(unsigned int dimension=0;dimension<2;dimension++)
 		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;side=static_cast<decltype(side)>(side+1))
 			for(PHM phm:matrix[dimension][side]){
+				events[dimension][side]<<make_pair(phm->pos()[0],phm->timer().events_count());
 				cntplots[dimension][side]<<make_pair(phm->pos()[0],phm->counter().average());
 				cnterrors[dimension][side]<<make_pair(phm->pos()[0],phm->counter().sigma());
 				if(phm->timer().events_count()>=2){
@@ -40,11 +41,12 @@ int main(int,char**){
 				}
 			}
 	printf("PLOT\n");
-	PlotTbl Counts,Times;
+	PlotTbl Counts,Times,Events;
 	for(unsigned int dimension=0;dimension<2;dimension++)
 		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;side=static_cast<decltype(side)>(side+1)){
 			Counts.WithErrorOnX(ax_n[dimension]+side_n[side]+"-count",static_cast<Tbl&&>(cntplots[dimension][side]),cnterrors[dimension][side].func());
 			Times.WithErrorOnX(ax_n[dimension]+side_n[side]+"-time",static_cast<Tbl&&>(timeplots[dimension][side]),timeerrors[dimension][side].func());
+			Events.WithoutErrors(ax_n[dimension]+side_n[side]+"-events",static_cast<Tbl&&>(events[dimension][side]));
 		}
 	printf("END\n");
 }
