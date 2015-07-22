@@ -36,36 +36,31 @@ LinearInterpolation<double> Efficiency({
 	make_pair(920,     36),
 	make_pair(940,     30)
 });
-inline vector<Pair> Get100P_dimensions(Vec&&Center,double hw){
+SiliconPhm::SiliconPhm(vector< Pair >&& dimensions, double glue_eff){
+	surface=Photosensor(static_right(dimensions),glue_eff,Efficiency.func());
+	time_signal=make_shared<WeightedTimeSignal>();
+	time_signal->AddSummand(0,1);
+	ampl_signal=make_shared<AmplitudeSignal>();
+	surface>>time_signal>>ampl_signal;
+}
+SiliconPhm::~SiliconPhm(){}
+shared_ptr< SignalProducent > SiliconPhm::Amplitude(){return ampl_signal;}
+shared_ptr< SignalProducent > SiliconPhm::Time(){return time_signal;}
+RectDimensions&& SiliconPhm::Dimensions(){return surface->Dimensions();}
+void SiliconPhm::Start(){surface->Start();}
+void SiliconPhm::RegisterPhoton(Photon& photon){surface->RegisterPhoton(photon);}
+void SiliconPhm::End(){surface->End();}
+double SiliconPhm::GlueEfficiency(){surface->GlueEfficiency();}
+inline vector<Pair> Get_dimensions(Vec&&Center,double hw){
 	vector<Pair> result;
 	for(double pos:Center)
 		result.push_back(make_pair(pos-hw,pos+hw));
 	return result;
 }
-SiliconPhm::SiliconPhm(Vec&&center_pos,double hw1,double hw2,double glue_eff,double distance):
-FlatLightguide(Get100P_dimensions(static_cast<Vec&&>(center_pos),hw1), glue_eff, 1.0, distance){
-	m_silicon=Photosensor(Get100P_dimensions(static_cast<Vec&&>(center_pos),hw2),Efficiency.func(),0.128);
-	m_counter=make_shared<Counter>();
-	m_timer=make_shared<Timer>(0);
-	operator<<(m_silicon<<m_counter<<m_timer);
-	m_pos=center_pos;
-}
-SiliconPhm::~SiliconPhm(){}
-Counter&&SiliconPhm::counter(){
-	return static_cast<Counter&&>(*m_counter);
-}
-Timer&& SiliconPhm::timer(){
-	return static_cast<Timer&&>(*m_timer);
-}
-Vec&& SiliconPhm::pos(){
-	return static_cast<Vec&&>(m_pos);
-}
-shared_ptr< SiliconPhm > TestPhm(Vec&& center_pos, double width, double glue_eff, double distance){
-	SiliconPhm* res=new SiliconPhm(static_cast<Vec&&>(center_pos),width/2.0,width/2.0,glue_eff,distance);
-	return shared_ptr<SiliconPhm>(res);
+shared_ptr< SiliconPhm > TestPhm(Vec&& center_pos, double width, double glue_eff){
+	return shared_ptr<SiliconPhm>(new SiliconPhm(Get_dimensions(static_right(center_pos),width/2.0),glue_eff));
 }
 
-shared_ptr<SiliconPhm> Hamamatsu_12572_100P(Vec&& center_pos, double glue_eff, double distance){
-	SiliconPhm* res=new SiliconPhm(static_cast<Vec&&>(center_pos),2.0,1.5,glue_eff,distance);
-	return shared_ptr<SiliconPhm>(res);
+shared_ptr<SiliconPhm> Hamamatsu_12572_100P(Vec&& center_pos, double glue_eff){
+	return shared_ptr<SiliconPhm>(new SiliconPhm(Get_dimensions(static_right(center_pos),1.5),glue_eff));
 }

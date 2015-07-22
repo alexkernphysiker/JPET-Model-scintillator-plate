@@ -1,22 +1,24 @@
 #ifndef fYoigiwl
 #define fYoigiwl
 #include <rectscin.h>
-#include <lightguide.h>
 #include <sensitive.h>
-#include <signal_model.h>
-class SiliconPhm:public FlatLightguide{
+#include <photon2signal.h>
+class SiliconPhm:public IPhotoSensitive{
 public:
-	SiliconPhm(Vec&&center_pos, double hw_all, double hw_sensitive,double glue_eff,double distance);
+	SiliconPhm(std::vector<Pair>&&dimensions,double glue_eff);
 	virtual ~SiliconPhm();
-	Counter&&counter();
-	Timer&&timer();
-	Vec&&pos();
+	std::shared_ptr<SignalProducent> Time();
+	std::shared_ptr<SignalProducent> Amplitude();
+	virtual void Start()final;
+	virtual void RegisterPhoton(Photon&photon)final;
+	virtual void End()final;
+	virtual RectDimensions&&Dimensions()final;
+	virtual double GlueEfficiency()final;
 private:
-	Vec m_pos;
-	std::shared_ptr<PhotoSensitiveSurfaceWithTTS> m_silicon;
-	std::shared_ptr<Counter> m_counter;
-	std::shared_ptr<Timer> m_timer;
+	std::shared_ptr<PhotoSensitiveSurface> surface;
+	std::shared_ptr<WeightedTimeSignal> time_signal;
+	std::shared_ptr<AmplitudeSignal> ampl_signal;
 };
-std::shared_ptr<SiliconPhm> TestPhm(Vec&&center_pos,double width,double glue_eff=0,double distance=0);
-std::shared_ptr<SiliconPhm> Hamamatsu_12572_100P(Vec&&center_pos,double glue_eff=0,double distance=0);
+std::shared_ptr<SiliconPhm> TestSquarePhm(Vec&&center_pos,double width,double glue_eff);
+std::shared_ptr<SiliconPhm> Hamamatsu_12572_100P(Vec&&center_pos,double glue_eff);
 #endif
