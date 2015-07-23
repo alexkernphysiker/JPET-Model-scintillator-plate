@@ -1,4 +1,5 @@
-#include <math_h/gnuplot/gnuplot.h>
+// this file is distributed under 
+// GPL v 3.0 license
 #include <math_h/interpolate.h>
 #include <math_h/randomfunc.h>
 #include "plastic_scin.h"
