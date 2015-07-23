@@ -51,12 +51,12 @@ shared_ptr< SignalProducent > SiliconPhm::Time(){return tts;}
 
 Hamamatsu::Hamamatsu(Vec&& pos, double glue_eff): 
 	FlatLightguide({
-		make_pair(pos[0]-(width/2.0),pos[0]+(width/2.0)),
-		make_pair(pos[1]-(width/2.0),pos[1]+(width/2.0))
+		make_pair(pos[0]-(Width()/2.0),pos[0]+(Width()/2.0)),
+		make_pair(pos[1]-(Width()/2.0),pos[1]+(Width()/2.0))
 	}, glue_eff, 1, 0){
 	phm=SiPhm({
-		make_pair(pos[0]-(width/2.0-edge),pos[0]+(width/2.0-edge)),
-		make_pair(pos[1]-(width/2.0-edge),pos[1]+(width/2.0-edge))
+		make_pair(pos[0]-(Width()/2.0-Edge()),pos[0]+(Width()/2.0-Edge())),
+		make_pair(pos[1]-(Width()/2.0-Edge()),pos[1]+(Width()/2.0-Edge()))
 	},1);
 	operator>>(phm);
 }

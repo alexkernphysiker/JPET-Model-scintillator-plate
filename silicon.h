@@ -23,10 +23,10 @@ inline std::shared_ptr<SiliconPhm> SiPhm(std::vector<Pair>&&dimensions,double gl
 }
 class Hamamatsu:public FlatLightguide{
 public:
-	const double width=4.0;
-	const double edge=0.5;
 	Hamamatsu(Vec&&pos, double glue_eff);
 	virtual ~Hamamatsu();
+	static inline double Width(){return 4;}
+	static inline double Edge(){return 0.5;}
 	std::shared_ptr<SignalProducent> Time();
 	std::shared_ptr<SignalProducent> Amplitude();
 private:
