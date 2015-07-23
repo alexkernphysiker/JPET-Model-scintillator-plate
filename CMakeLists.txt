@@ -7,3 +7,5 @@ set(modelfiles plastic_scin.cpp silicon.cpp RectangularScintillator/math_h/gnupl
 #different simulations
 add_executable(Model1 model1.cpp ${modelfiles})
 target_link_libraries(Model1 rectscin)
+add_executable(Model2 model2.cpp ${modelfiles})
+target_link_libraries(Model2 rectscin)

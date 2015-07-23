@@ -8,6 +8,7 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
+const size_t ev_n=100;
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
 	Vec ScinSize={300,300,4},Step={75,75};
@@ -17,7 +18,6 @@ int main(int,char**){
 	for(size_t dimension=0;dimension<2;dimension++){
 		auto time_diff=SignalSum({1,-1});
 		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
-			double length=ScinSize[dimension];
 			auto phm=SiPhm({make_pair(0,ScinSize[dimension]),make_pair(0,ScinSize[2])},0);
 			scintillator.Surface(dimension,side)>>phm;
 			time_diff<<phm->Time();
@@ -31,7 +31,6 @@ int main(int,char**){
 		ostringstream name;
 		name<<"Pos("<<x<<","<<y<<")";
 		printf("BEGIN %s\n",name.str().c_str());
-		const size_t ev_n=500;
 		for(size_t cnt=0;cnt<ev_n;cnt++)
 			scintillator.RegisterGamma({x,y,distr(rnd)},3000);
 		printf("END (%i events of %i registered)\n",Correlation->Points().size(),ev_n);
