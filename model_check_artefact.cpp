@@ -8,7 +8,7 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
-const size_t ev_n=500;
+const size_t ev_n=5000;
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
 	Vec ScinSize={400,400,4},Step={75,75};
