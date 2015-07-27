@@ -8,11 +8,11 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
-const size_t ev_n=1000;
+const size_t ev_n=10000;
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
-	Vec ScinSize={Hamamatsu::Width()*100,Hamamatsu::Width()*100,Hamamatsu::Width()},
-		Step={Hamamatsu::Width()*25,Hamamatsu::Width()*25};
+	Vec ScinSize={Hamamatsu::Width()*100,Hamamatsu::Width()*100,Hamamatsu::Width()*2},
+		PosStep={Hamamatsu::Width()*25,Hamamatsu::Width()*25};
 	vector<Pair> time_res_x,artefacts;
 	for(size_t orderstatistics=0;orderstatistics<20;orderstatistics++){
 		printf("CREATE virtual setup for simulating order statistics %i\n",orderstatistics+1);
@@ -23,11 +23,12 @@ int main(int,char**){
 			auto time_diff=SignalSum({1,-1});
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
 				auto allside=make_shared<SignalSortAndSelect>(orderstatistics);
-				for(double step=Hamamatsu::Width(),x=step/2.0;x<ScinSize[dimension];x+=step){
-					auto phm=hamamatsu({x,step/2.0},1.0);
-					scintillator.Surface(dimension,side)>>phm;
-					allside<<phm->Time();
-				}
+				for(double x=Hamamatsu::Width()/2.0;x<ScinSize[dimension];x+=Hamamatsu::Width())
+					for(double z=Hamamatsu::Width()/2.0;z<ScinSize[2];z+=Hamamatsu::Width()){
+						auto phm=hamamatsu({x,z},1.0);
+						scintillator.Surface(dimension,side)>>phm;
+						allside<<phm->Time();
+					}
 				time_diff<<allside;
 			}
 			Correlation<<time_diff;
@@ -35,8 +36,8 @@ int main(int,char**){
 				time_diff>>statistic_x;
 		}
 		PlotPoints<double,vector<Pair>> plot;
-		for(double x=Step[0];x<ScinSize[0];x+=Step[0])
-			for(double y=Step[1];y<ScinSize[1];y+=Step[1]){
+		for(double x=PosStep[0];x<ScinSize[0];x+=PosStep[0])
+			for(double y=PosStep[1];y<ScinSize[1];y+=PosStep[1]){
 				default_random_engine rnd;
 				uniform_real_distribution<double> distr(0,ScinSize[2]);
 				ostringstream name;
@@ -48,7 +49,7 @@ int main(int,char**){
 				if((pow(x-(ScinSize[0]/2.0),2)<1.0)&&(pow(y-(ScinSize[1]/2.0),2)<1.0))
 					time_res_x.push_back(make_pair(orderstatistics,statistic_x->data().getSigma()));
 				plot.WithoutErrors(name.str(),Correlation->Points());
-				if((pow(x-(Step[0]),2)<1.0)&&(pow(y-(Step[1]),2)<1.0)){
+				if((pow(x-(PosStep[0]),2)<1.0)&&(pow(y-(PosStep[1]),2)<1.0)){
 					double art=0;
 					for(auto&p:Correlation->Points())
 						if((p.first>=0)&&(p.second>=0))
