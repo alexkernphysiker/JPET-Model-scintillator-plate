@@ -8,13 +8,13 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
-const size_t ev_n=2000;
+const size_t ev_n=1000;
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
 	Vec ScinSize={1000,1000,80},PosStep={250,250},
 		PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 	vector<Pair> time_res_center,time_res_corner,artefacts;
-	for(size_t orderstatistics=0;orderstatistics<15;orderstatistics++){
+	for(size_t orderstatistics=0;orderstatistics<10;orderstatistics++){
 		printf("CREATE virtual setup for simulating order statistics %i\n",orderstatistics+1);
 		BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 		auto Correlation=make_shared<Signal2DCorrelation>();
