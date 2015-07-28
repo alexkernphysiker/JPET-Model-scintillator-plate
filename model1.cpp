@@ -8,10 +8,10 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
-const size_t ev_n=100;
+const size_t ev_n=1000;
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
-	Vec ScinSize={300,300,4},Step={75,75};
+	Vec ScinSize={1000,1000,80},Step={250,250};
 	printf("CREATE\n");
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 	auto Correlation=make_shared<Signal2DCorrelation>();
@@ -34,7 +34,7 @@ int main(int,char**){
 		default_random_engine rnd;
 		uniform_real_distribution<double> distr(0,ScinSize[2]);
 		ostringstream name;
-		name<<"Pos("<<x<<","<<y<<")";
+		name<<"Pos_("<<x<<","<<y<<")";
 		printf("BEGIN %s\n",name.str().c_str());
 		for(size_t cnt=0;cnt<ev_n;cnt++)
 			scintillator.RegisterGamma({x,y,distr(rnd)},3000);
