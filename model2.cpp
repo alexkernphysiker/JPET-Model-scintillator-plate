@@ -9,11 +9,14 @@
 #include "silicon.h"
 using namespace std;
 #include "model_params.h"
+Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
-	Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
-	vector<Pair> time_res_center,time_res_corner,artefacts;
-	for(size_t orderstatistics=0;orderstatistics<10;orderstatistics++){
+	vector<Pair> time_res_center,
+		time_res_corner,
+		artefacts;
+	mutex M;
+	auto proc=[&time_res_center,&time_res_corner,&artefacts,&M](size_t orderstatistics){
 		printf("CREATE virtual setup for simulating order statistics %i\n",orderstatistics+1);
 		BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 		auto Correlation=make_shared<Signal2DCorrelation>();
@@ -28,7 +31,7 @@ int main(int,char**){
 						scintillator.Surface(dimension,side)>>phm;
 						allside<<phm->Time();
 					}
-				auto exit=make_shared<Signal>();
+					auto exit=make_shared<Signal>();
 				if(side==RectDimensions::Left)
 					allside>>exit;
 				else
@@ -45,13 +48,13 @@ int main(int,char**){
 				uniform_real_distribution<double> distr(0,ScinSize[2]);
 				ostringstream name;
 				name<<"Pos("<<x<<","<<y<<")["<<orderstatistics+1<<"]";
-
+				
 				printf("BEGIN %s\n",name.str().c_str());
 				for(size_t cnt=0;cnt<ev_n;cnt++)
 					scintillator.RegisterGamma({x,y,distr(rnd)},3000);
 				printf("END (%i events of %i registered)\n",Correlation->Points().size(),ev_n);
+				lock_guard<mutex> lock(M);
 				PlotPoints<double,vector<Pair>>().WithoutErrors(name.str(),Correlation->Points());
-
 				if((pow(x-(ScinSize[0]/2.0),2)<1.0)&&(pow(y-(ScinSize[1]/2.0),2)<1.0))
 					time_res_center.push_back(make_pair(orderstatistics,statistic_x->data().getSigma()));
 				if((pow(x-(PosStep[0]),2)<1.0)&&(pow(y-(PosStep[1]),2)<1.0)){
@@ -62,12 +65,18 @@ int main(int,char**){
 							artefact_cnt++;
 						else
 							sigma_in_corner.AddValue(p.first);
-					artefacts.push_back(make_pair(orderstatistics,artefact_cnt/double(Correlation->Points().size())));
+						artefacts.push_back(make_pair(orderstatistics,artefact_cnt/double(Correlation->Points().size())));
 					time_res_corner.push_back(make_pair(orderstatistics,sigma_in_corner.getSigma()));
 				}
 				Correlation->Clear();
 				statistic_x->Clear();
 			}
+	};
+	{
+		vector<shared_ptr<thread>> THR;
+		for(size_t orderstatistics=0;orderstatistics<10;orderstatistics++)
+			THR.push_back(make_shared<thread>(proc,orderstatistics));
+		for(auto thr:THR)thr->join();
 	}
 	PlotPoints<double,vector<Pair>>()
 		.WithoutErrors("Sigma_t center",static_right(time_res_center))
