@@ -10,7 +10,7 @@
 using namespace std;
 #include "model_params.h"
 int main(int,char**){
-	Plotter::Instance().SetOutput(".");
+	Plotter::Instance().SetOutput(".","1.");
 	printf("CREATE\n");
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 	auto Correlation=make_shared<Signal2DCorrelation>();

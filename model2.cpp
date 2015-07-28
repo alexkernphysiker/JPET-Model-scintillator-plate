@@ -11,7 +11,7 @@ using namespace std;
 #include "model_params.h"
 Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
-	Plotter::Instance().SetOutput(".");
+	Plotter::Instance().SetOutput(".","2.");
 	LinearInterpolation<double> time_res_center,time_res_corner;
 	mutex M;
 	auto proc=[&time_res_center,&time_res_corner,&M](size_t orderstatistics){
