@@ -8,11 +8,10 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
-const size_t ev_n=1000;
+#include "model_params.h"
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
-	Vec ScinSize={1000,1000,80},PosStep={250,250},
-		PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
+	Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 	vector<Pair> time_res_center,time_res_corner,artefacts;
 	for(size_t orderstatistics=0;orderstatistics<10;orderstatistics++){
 		printf("CREATE virtual setup for simulating order statistics %i\n",orderstatistics+1);
