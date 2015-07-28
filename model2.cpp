@@ -12,11 +12,9 @@ using namespace std;
 Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
 	Plotter::Instance().SetOutput(".");
-	vector<Pair> time_res_center,
-		time_res_corner,
-		artefacts;
+	LinearInterpolation<double> time_res_center,time_res_corner;
 	mutex M;
-	auto proc=[&time_res_center,&time_res_corner,&artefacts,&M](size_t orderstatistics){
+	auto proc=[&time_res_center,&time_res_corner,&M](size_t orderstatistics){
 		printf("CREATE virtual setup for simulating order statistics %i\n",orderstatistics+1);
 		BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 		auto Correlation=make_shared<Signal2DCorrelation>();
@@ -53,20 +51,13 @@ int main(int,char**){
 				for(size_t cnt=0;cnt<ev_n;cnt++)
 					scintillator.RegisterGamma({x,y,distr(rnd)},3000);
 				printf("END (%i events of %i registered)\n",Correlation->Points().size(),ev_n);
-				lock_guard<mutex> lock(M);
-				PlotPoints<double,vector<Pair>>().WithoutErrors(name.str(),Correlation->Points());
-				if((pow(x-(ScinSize[0]/2.0),2)<1.0)&&(pow(y-(ScinSize[1]/2.0),2)<1.0))
-					time_res_center.push_back(make_pair(orderstatistics,statistic_x->data().getSigma()));
-				if((pow(x-(PosStep[0]),2)<1.0)&&(pow(y-(PosStep[1]),2)<1.0)){
-					Sigma<double> sigma_in_corner;
-					double artefact_cnt=0;
-					for(Pair&p:Correlation->Points())
-						if((p.first>=0)&&(p.second>=0))
-							artefact_cnt++;
-						else
-							sigma_in_corner.AddValue(p.first);
-						artefacts.push_back(make_pair(orderstatistics,artefact_cnt/double(Correlation->Points().size())));
-					time_res_corner.push_back(make_pair(orderstatistics,sigma_in_corner.getSigma()));
+				{
+					lock_guard<mutex> lock(M);
+					PlotPoints<double,vector<Pair>>().WithoutErrors(name.str(),Correlation->Points());
+					if((pow(x-(ScinSize[0]/2.0),2)<1.0)&&(pow(y-(ScinSize[1]/2.0),2)<1.0))
+						time_res_center<<make_pair(orderstatistics,statistic_x->data().getSigma());
+					if((pow(x-(PosStep[0]),2)<1.0)&&(pow(y-(PosStep[1]),2)<1.0))
+						time_res_corner<<make_pair(orderstatistics,statistic_x->data().getSigma());
 				}
 				Correlation->Clear();
 				statistic_x->Clear();
@@ -78,8 +69,7 @@ int main(int,char**){
 			THR.push_back(make_shared<thread>(proc,orderstatistics));
 		for(auto thr:THR)thr->join();
 	}
-	PlotPoints<double,vector<Pair>>()
+	PlotPoints<double,decltype(time_res_center)>()
 		.WithoutErrors("Sigma_t center",static_right(time_res_center))
 		.WithoutErrors("Sigma_t corner",static_right(time_res_corner));
-	PlotPoints<double,vector<Pair>>().WithoutErrors("Artefacts amount for corner",static_right(artefacts));
 }
