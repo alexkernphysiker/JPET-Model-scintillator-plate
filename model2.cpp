@@ -20,7 +20,7 @@ int main(int,char**){
 		auto Correlation=make_shared<Signal2DCorrelation>();
 		auto statistic_x=make_shared<SignalStatictics>();
 		for(size_t dimension=0;dimension<2;dimension++){
-			auto time_diff=SignalSum({1,-1});
+			auto time_diff=make_shared<SignalSumm>();
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
 				auto allside=make_shared<SignalSortAndSelect>(orderstatistics);
 				for(double x=PhmStep[dimension]/2.0;x<ScinSize[dimension];x+=PhmStep[dimension])
@@ -29,7 +29,12 @@ int main(int,char**){
 						scintillator.Surface(dimension,side)>>phm;
 						allside<<phm->Time();
 					}
-				time_diff<<allside;
+				auto exit=make_shared<Signal>();
+				if(side==RectDimensions::Left)
+					allside>>exit;
+				else
+					allside>>(SignalInvert()>>exit);
+				time_diff<<exit;
 			}
 			Correlation<<time_diff;
 			if(dimension==0)

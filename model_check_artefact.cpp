@@ -16,11 +16,16 @@ int main(int,char**){
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 	auto Correlation=make_shared<Signal2DCorrelation>();
 	for(size_t dimension=0;dimension<2;dimension++){
-		auto time_diff=SignalSum({1,-1});
+		auto time_diff=make_shared<SignalSumm>();
 		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
 			auto phm=SiPhm({make_pair(0,ScinSize[dimension]),make_pair(0,ScinSize[2])},0);
 			scintillator.Surface(dimension,side)>>phm;
-			time_diff<<phm->Time();
+			auto exit=make_shared<Signal>();
+			if(side==RectDimensions::Left)
+				phm->Time()>>exit;
+			else
+				phm->Time()>>(SignalInvert()>>exit);
+			time_diff<<exit;
 		}
 		Correlation<<time_diff;
 	}
