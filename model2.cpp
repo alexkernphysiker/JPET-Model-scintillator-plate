@@ -50,7 +50,7 @@ int main(int,char**){
 				printf("BEGIN %s\n",name.str().c_str());
 				for(size_t cnt=0;cnt<ev_n;cnt++)
 					scintillator.RegisterGamma({x,y,distr(rnd)},3000);
-				printf("END (%i events of %i registered)\n",Correlation->Points().size(),ev_n);
+				printf("END %s (%i events of %i)\n",name.str().c_str(),Correlation->Points().size(),ev_n);
 				{
 					lock_guard<mutex> lock(M);
 					PlotPoints<double,vector<Pair>>().WithoutErrors(name.str(),Correlation->Points());
