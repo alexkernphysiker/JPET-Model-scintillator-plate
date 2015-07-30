@@ -40,6 +40,7 @@ int main(int,char**){
 			if(dimension==0)
 				time_diff>>statistic_x;
 		}
+		PlotPoints<double,vector<Pair>> plot;
 		for(double x=PosStep[0];x<ScinSize[0];x+=PosStep[0])
 			for(double y=PosStep[1];y<ScinSize[1];y+=PosStep[1]){
 				default_random_engine rnd;
@@ -53,7 +54,7 @@ int main(int,char**){
 				printf("END %s (%i events of %i)\n",name.str().c_str(),Correlation->Points().size(),ev_n);
 				{
 					lock_guard<mutex> lock(M);
-					PlotPoints<double,vector<Pair>>().WithoutErrors(name.str(),Correlation->Points());
+					plot.WithoutErrors(name.str(),Correlation->Points());
 					if((pow(x-(ScinSize[0]/2.0),2)<1.0)&&(pow(y-(ScinSize[1]/2.0),2)<1.0))
 						time_res_center<<make_pair(orderstatistics,statistic_x->data().getSigma());
 					if((pow(x-(PosStep[0]),2)<1.0)&&(pow(y-(PosStep[1]),2)<1.0))
@@ -70,6 +71,6 @@ int main(int,char**){
 		for(auto thr:THR)thr->join();
 	}
 	PlotPoints<double,decltype(time_res_center)>()
-		.WithoutErrors("Sigma_t center",static_right(time_res_center))
+		.LineOnly("Sigma_t center",static_right(time_res_center))
 		.WithoutErrors("Sigma_t corner",static_right(time_res_corner));
 }
