@@ -22,10 +22,8 @@ int main(int,char**){
 						scintillator.Surface(dimension,side)>>phm;
 						allside<<phm->Time();
 					}
-				auto index=make_shared<Signal>(),
-					time=make_shared<Signal>(),
-					index_triggered=index=make_shared<Signal>(),
-					time_triggered=index=make_shared<Signal>();
+				auto index=make_shared<Signal>(),time=make_shared<Signal>(),
+					index_triggered=make_shared<Signal>(),time_triggered=make_shared<Signal>();
 				allside>>index>>time;
 				(trigger<<index<<time)>>index_triggered>>time_triggered;
 				output<<index_triggered<<time_triggered;
