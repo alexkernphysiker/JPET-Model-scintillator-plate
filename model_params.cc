@@ -3,5 +3,5 @@
 #ifndef wjScHjPP
 #define wjScHjPP
 const size_t ev_n=5000;
-Vec ScinSize={600,600,80},PosStep={ScinSize[0]/4.0,ScinSize[1]/4.0};
+Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/4.0,ScinSize[1]/4.0};
 #endif 
