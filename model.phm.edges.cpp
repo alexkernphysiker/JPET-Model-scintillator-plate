@@ -32,7 +32,7 @@ int main(int,char**){
 			default_random_engine rnd;
 			uniform_real_distribution<double> distr(0,ScinSize[2]);
 			ostringstream name;
-			name<<"DATA."<<x<<"."<<y<<".model3.txt";
+			name<<"DATA."<<x<<"."<<y<<".edges.txt";
 			output->Redirect(name.str());
 			printf("BEGIN %s\n",name.str().c_str());
 			for(size_t cnt=0;cnt<ev_n;cnt++)
