@@ -7,7 +7,7 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
-#include "model_params.cc"
+#include "model.params.cc"
 Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
