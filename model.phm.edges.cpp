@@ -12,6 +12,7 @@ Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 	auto output=make_shared<SignalsToFile>();{
+		auto trigger=make_shared<AllSignalsPresent>();
 		for(size_t dimension=0;dimension<2;dimension++){
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
 				auto allside=make_shared<SignalSortAndSelect2>(0);
@@ -23,7 +24,10 @@ int main(int,char**){
 					}
 				auto index=make_shared<Signal>(),time=index=make_shared<Signal>();
 				allside>>index>>time;
-				output<<index<<time;
+				auto index_triggered=make_shared<Signal>(),time_triggered=index=make_shared<Signal>();
+				trigger<<index<<time;
+				trigger>>index_triggered>>time_triggered;
+				output<<index_triggered<<time_triggered;
 			}
 		}
 	}
