@@ -7,7 +7,7 @@
 #include <sensitive.h>
 #include <photon2signal.h>
 #include <signal_processing.h>
-class SiliconPhm:public PhotoSensitiveSurface{
+class SiliconPhm:public PhotoSensitiveSurfaceWithTTS{
 public:
 	SiliconPhm(std::vector<Pair>&&dimensions,double glue_eff);
 	virtual ~SiliconPhm();
@@ -15,7 +15,6 @@ public:
 	std::shared_ptr<SignalProducent> Amplitude();
 private:
 	std::shared_ptr<WeightedTimeSignal> time_signal;
-	std::shared_ptr<SignalSmear> tts;
 	std::shared_ptr<AmplitudeSignal> ampl_signal;
 };
 inline std::shared_ptr<SiliconPhm> SiPhm(std::vector<Pair>&&dimensions,double glue_eff){

@@ -10,8 +10,11 @@ using namespace std;
 #include "model.params.cc"
 Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
+	default_random_engine engine;
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
-	auto output=make_shared<SignalsToFile>(),output_triggerless=make_shared<SignalsToFile>();{
+	auto output=make_shared<SignalsToFile>(),
+		output_triggerless=make_shared<SignalsToFile>();
+	{
 		auto trigger=make_shared<AllSignalsPresent>();
 		for(size_t dimension=0;dimension<2;dimension++){
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
@@ -32,7 +35,6 @@ int main(int,char**){
 			}
 		}
 	}
-	default_random_engine rnd;
 	uniform_real_distribution<double> distrz(0,ScinSize[2]);
 	for(double x=PosStep[0];x<ScinSize[0];x+=PosStep[0])
 		for(double y=PosStep[1];y<ScinSize[1];y+=PosStep[1]){
@@ -43,7 +45,7 @@ int main(int,char**){
 			output_triggerless->Redirect(name2.str());
 			printf("BEGIN %s\n",name.str().c_str());
 			for(size_t cnt=0;cnt<ev_n;cnt++)
-				scintillator.RegisterGamma({x,y,distrz(rnd)},3000);
+				scintillator.RegisterGamma({x,y,distrz(engine)},3000,engine);
 			printf("END %s\n",name.str().c_str());
 		}
 	printf("GOODBYE!\n");

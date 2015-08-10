@@ -38,16 +38,15 @@ LinearInterpolation<double> Efficiency({
 	make_pair(940,0.30)
 });
 SiliconPhm::SiliconPhm(vector< Pair >&& dimensions, double glue_eff):
-	PhotoSensitiveSurface(static_right(dimensions),glue_eff,Efficiency.func()){
+	PhotoSensitiveSurfaceWithTTS(static_right(dimensions),glue_eff,Efficiency.func(),0.128){
 	time_signal=make_shared<WeightedTimeSignal>();
 	time_signal->AddSummand(0,1);
-	tts=make_shared<SignalSmear>(0.128);
 	ampl_signal=make_shared<AmplitudeSignal>();
-	operator>>(time_signal>>tts)>>ampl_signal;
+	operator>>(time_signal)>>ampl_signal;
 }
 SiliconPhm::~SiliconPhm(){}
 shared_ptr< SignalProducent > SiliconPhm::Amplitude(){return ampl_signal;}
-shared_ptr< SignalProducent > SiliconPhm::Time(){return tts;}
+shared_ptr< SignalProducent > SiliconPhm::Time(){return time_signal;}
 
 Hamamatsu::Hamamatsu(Vec&& pos, double glue_eff): 
 	FlatLightguide({
