@@ -10,7 +10,7 @@ using namespace std;
 #include "model.params.cc"
 Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
-	default_random_engine engine;
+	RANDOM engine;
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 	auto output=make_shared<SignalsToFile>(),
 		output_triggerless=make_shared<SignalsToFile>();
