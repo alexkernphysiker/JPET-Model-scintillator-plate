@@ -11,7 +11,7 @@ using namespace std;
 Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
-	auto output=make_shared<SignalsToFile>();{
+	auto output=make_shared<SignalsToFile>(),output_triggerless=make_shared<SignalsToFile>();{
 		auto trigger=make_shared<AllSignalsPresent>();
 		for(size_t dimension=0;dimension<2;dimension++){
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
@@ -28,19 +28,22 @@ int main(int,char**){
 				allside>>index>>time;
 				(trigger<<index<<time)>>index_triggered>>time_triggered;
 				output<<index_triggered<<time_triggered;
+				output_triggerless<<index<<time;
 			}
 		}
 	}
+	default_random_engine rnd;
+	uniform_real_distribution<double> distrz(0,ScinSize[2]);
 	for(double x=PosStep[0];x<ScinSize[0];x+=PosStep[0])
 		for(double y=PosStep[1];y<ScinSize[1];y+=PosStep[1]){
-			default_random_engine rnd;
-			uniform_real_distribution<double> distr(0,ScinSize[2]);
-			ostringstream name;
+			ostringstream name,name2;
 			name<<"DATA."<<x<<"."<<y<<".edges.txt";
+			name2<<"DATA."<<x<<"."<<y<<".edges.triggerless.txt";
 			output->Redirect(name.str());
+			output_triggerless->Redirect(name2.str());
 			printf("BEGIN %s\n",name.str().c_str());
 			for(size_t cnt=0;cnt<ev_n;cnt++)
-				scintillator.RegisterGamma({x,y,distr(rnd)},3000);
+				scintillator.RegisterGamma({x,y,distrz(rnd)},3000);
 			printf("END %s\n",name.str().c_str());
 		}
 	printf("GOODBYE!\n");
