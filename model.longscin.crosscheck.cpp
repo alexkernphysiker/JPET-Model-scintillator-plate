@@ -32,7 +32,7 @@ int main(int,char**){
 	}
 	time_diff>>time_diff_stat;
 	LinearInterpolation<double> sigma_func;
-	for(size_t N=2000;N<7000;N+=300){
+	for(size_t N=2000;N<7000;N+=100){
 		printf("N=%i\n",N);
 		time_diff_stat->Clear();
 		for(size_t cnt=0;cnt<ev_n;cnt++){
