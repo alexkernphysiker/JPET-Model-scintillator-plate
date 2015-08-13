@@ -8,7 +8,6 @@
 #include "silicon.h"
 using namespace std;
 #include "model.params.cc"
-Vec PhmStep={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()};
 int main(int,char**){
 	RANDOM engine;
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
@@ -19,8 +18,8 @@ int main(int,char**){
 		for(size_t dimension=0;dimension<2;dimension++){
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
 				auto allside=make_shared<SignalSortAndSelect2>(0);size_t cnt=0;
-				for(double x=PhmStep[dimension]/2.0;x<ScinSize[dimension];x+=PhmStep[dimension])
-					for(double z=PhmStep[2]/2.0;z<ScinSize[2];z+=PhmStep[2]){
+				for(double x=PhmStep_edge[dimension]/2.0;x<ScinSize[dimension];x+=PhmStep_edge[dimension])
+					for(double z=PhmStep_edge[2]/2.0;z<ScinSize[2];z+=PhmStep_edge[2]){
 						auto phm=hamamatsu({x,z},1.0);
 						scintillator.Surface(dimension,side)>>phm;
 						allside<<phm->Time();cnt++;
