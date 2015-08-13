@@ -36,7 +36,7 @@ int main(int,char**){
 			auto allside=make_shared<SignalSortAndSelect2>(0);size_t cnt=0;
 			for(double x=PhmStep_flat[0]/2.0;x<ScinSize[0];x+=PhmStep_flat[0])
 				for(double y=PhmStep_flat[1]/2.0;y<ScinSize[1];y+=PhmStep_flat[1]){
-					auto phm=hamamatsu({x,y},0.0);
+					auto phm=hamamatsu({x,y},1.0);
 					scintillator.Surface(2,RectDimensions::Left)>>phm;
 					allside<<phm->Time();cnt++;
 				}
