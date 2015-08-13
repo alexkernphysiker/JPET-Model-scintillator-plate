@@ -7,6 +7,7 @@
 #include <signal_statistics.h>
 #include "plastic_scin.h"
 #include "silicon.h"
+#include "model.params.cc"
 using namespace std;
 int main(int,char**){
 	RANDOM engine;
@@ -17,7 +18,6 @@ int main(int,char**){
 		auto allside=make_shared<SignalSortAndSelect>(2);
 		for(double z=-Hamamatsu::Width()/2.0;z<=Hamamatsu::Width();z+=Hamamatsu::Width())
 			for(double y=-Hamamatsu::Width()*1.5;y<=Hamamatsu::Width()*2;y+=Hamamatsu::Width()){
-				printf(" %f; %f \n",z,y);
 				auto phm=hamamatsu({y,z},1.0);
 				scintillator.Surface(0,side)>>phm;
 				allside<<phm->Time();
@@ -33,9 +33,14 @@ int main(int,char**){
 	time_diff>>time_diff_stat;
 	LinearInterpolation<double> sigma_func;
 	for(size_t N=2000;N<7000;N+=300){
+		printf("N=%i\n",N);
 		time_diff_stat->Clear();
-		scintillator.RegisterGamma({0,0,0},N,engine);
+		for(size_t cnt=0;cnt<ev_n;cnt++){
+			scintillator.RegisterGamma({0,0,0},N,engine);
+			printf("%i enevts         \r",cnt);
+		}
 		sigma_func<<make_pair(N,time_diff_stat->data().getSigma());
+		printf("\n");
 	}
 	Plotter::Instance().SetOutput(".","crosscheck");
 	PlotPoints<double,decltype(sigma_func)>().WithoutErrors("Crosscheck",static_right(sigma_func));
