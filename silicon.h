@@ -18,7 +18,7 @@ private:
 	std::shared_ptr<AmplitudeSignal> ampl_signal;
 };
 inline std::shared_ptr<SiliconPhm> SiPhm(std::vector<Pair>&&dimensions,double glue_eff){
-	return std::shared_ptr<SiliconPhm>(new SiliconPhm(static_right(dimensions),glue_eff));
+	return std::shared_ptr<SiliconPhm>(new SiliconPhm(static_cast<decltype(dimensions)&&>(dimensions),glue_eff));
 }
 class Hamamatsu:public FlatLightguide{
 public:
@@ -32,6 +32,6 @@ private:
 	std::shared_ptr<SiliconPhm> phm;
 };
 inline std::shared_ptr<Hamamatsu> hamamatsu(Vec&&pos,double glue_eff){
-	return std::shared_ptr<Hamamatsu>(new Hamamatsu(static_right(pos),glue_eff));
+	return std::shared_ptr<Hamamatsu>(new Hamamatsu(static_cast<Vec&&>(pos),glue_eff));
 }
 #endif

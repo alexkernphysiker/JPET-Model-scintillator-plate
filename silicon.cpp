@@ -38,7 +38,7 @@ LinearInterpolation<double> Efficiency({
 	make_pair(940,0.30)
 });
 SiliconPhm::SiliconPhm(vector< Pair >&& dimensions, double glue_eff):
-	PhotoSensitiveSurfaceWithTTS(static_right(dimensions),glue_eff,Efficiency.func(),0.128){
+	PhotoSensitiveSurfaceWithTTS(static_cast<decltype(dimensions)&&>(dimensions),glue_eff,Efficiency.func(),0.128){
 	time_signal=make_shared<WeightedTimeSignal>();
 	time_signal->AddSummand(0,1);
 	ampl_signal=make_shared<AmplitudeSignal>();

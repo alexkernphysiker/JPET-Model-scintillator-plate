@@ -140,7 +140,7 @@ LinearInterpolation<double> Absorption({
 });
 BC420::BC420(vector<Pair>&&dimensions):
 	RectangularScintillator(
-		static_right(dimensions),
+		static_cast<decltype(dimensions)&&>(dimensions),
 		TimeDistribution2(0.005,0.2,1.5),
 		RandomValueGenerator<double>([](double lambda){return LAMBDA(lambda);},LAMBDA.min(),LAMBDA.max(),200),
 		refraction,Absorption.func()

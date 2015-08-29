@@ -11,8 +11,8 @@ using namespace std;
 int main(int,char**){
 	RANDOM engine;
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
-	auto output=make_shared<SignalsToFile>(),
-	output_triggerless=make_shared<SignalsToFile>();
+	auto output=make_shared<SignalsToFile>();
+	auto output_triggerless=make_shared<SignalsToFile>();
 	{
 		auto trigger=make_shared<AllSignalsPresent>();
 		for(size_t dimension=0;dimension<2;dimension++){

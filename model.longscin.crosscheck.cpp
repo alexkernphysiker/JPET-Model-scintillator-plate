@@ -43,5 +43,5 @@ int main(int,char**){
 		printf("\n");
 	}
 	Plotter::Instance().SetOutput(".","crosscheck");
-	PlotPoints<double,decltype(sigma_func)>().WithoutErrors("Crosscheck",static_right(sigma_func));
+	PlotPoints<double,decltype(sigma_func)>().WithoutErrors("Crosscheck",sigma_func);
 }
