@@ -34,6 +34,7 @@ int main(int,char**){
 			}
 		}
 	}
+	scintillator.Configure(BC420::Reflections(7));
 	uniform_real_distribution<double> distrz(0,ScinSize[2]);
 	for(double x=PosStep[0];x<ScinSize[0];x+=PosStep[0])
 		for(double y=PosStep[1];y<ScinSize[1];y+=PosStep[1]){

@@ -30,6 +30,7 @@ int main(int,char**){
 			time_diff<<inv;
 		}
 	}
+	scintillator.Configure(BC420::Reflections(7));
 	time_diff>>time_diff_stat;
 	LinearInterpolation<double> sigma_func;
 	for(size_t N=2000;N<7000;N+=100){
