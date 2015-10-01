@@ -17,14 +17,13 @@ int main(int,char**){
 		auto trigger=make_shared<AllSignalsPresent>();
 		for(size_t dimension=0;dimension<2;dimension++){
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
-				auto allside=make_shared<SignalSortAndSelect2>(0);size_t cnt=0;
+				auto allside=make_shared<SignalSortAndSelect2>(1);
 				for(double x=PhmStep_edge[dimension]/2.0;x<ScinSize[dimension];x+=PhmStep_edge[dimension])
 					for(double z=PhmStep_edge[2]/2.0;z<ScinSize[2];z+=PhmStep_edge[2]){
 						auto phm=hamamatsu({x,z},1.0);
 						scintillator.Surface(dimension,side)>>phm;
-						allside<<phm->Time();cnt++;
+						allside<<phm->Time();
 					}
-				printf("Dimension: %i; Side: %i; %i channels \n",dimension,side,cnt);
 				auto index=make_shared<Signal>(),time=make_shared<Signal>(),
 					index_triggered=make_shared<Signal>(),time_triggered=make_shared<Signal>();
 				allside>>index>>time;
