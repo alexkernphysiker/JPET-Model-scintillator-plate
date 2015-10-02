@@ -28,14 +28,13 @@ int main(int,char**){
 				output<<index<<time;
 			}
 		}{
-			auto allside=make_shared<SignalSortAndSelect2>(0);size_t cnt=0;
+			auto allside=make_shared<SignalSortAndSelect2>(0);
 			for(double x=PhmStep_flat[0]/2.0;x<ScinSize[0];x+=PhmStep_flat[0])
 				for(double y=PhmStep_flat[1]/2.0;y<ScinSize[1];y+=PhmStep_flat[1]){
 					auto phm=hamamatsu({x,y},1.0);
 					scintillator.Surface(2,RectDimensions::Left)>>phm;
-					allside<<phm->Time();cnt++;
+					allside<<phm->Time();
 				}
-			printf("flat; %i channels \n",cnt);
 			auto index=make_shared<Signal>(),time=make_shared<Signal>(),
 			index_triggered=make_shared<Signal>(),time_triggered=make_shared<Signal>();
 			allside>>index>>time;
