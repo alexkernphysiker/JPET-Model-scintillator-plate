@@ -20,18 +20,17 @@ private:
 inline std::shared_ptr<SiliconPhm> SiPhm(std::vector<Pair>&&dimensions,double glue_eff){
 	return std::shared_ptr<SiliconPhm>(new SiliconPhm(static_cast<decltype(dimensions)&&>(dimensions),glue_eff));
 }
-class Hamamatsu:public FlatLightguide{
+class SquaredSilicon:public FlatLightguide{
 public:
-	Hamamatsu(Vec&&pos, double glue_eff);
-	virtual ~Hamamatsu();
-	static inline double Width(){return 4;}
-	static inline double Edge(){return 0.5;}
+	SquaredSilicon(Vec&&pos,double width,double edge, double glue_eff);
+	virtual ~SquaredSilicon();
 	std::shared_ptr<SignalProducent> Time();
 	std::shared_ptr<SignalProducent> Amplitude();
 private:
 	std::shared_ptr<SiliconPhm> phm;
 };
-inline std::shared_ptr<Hamamatsu> hamamatsu(Vec&&pos,double glue_eff){
-	return std::shared_ptr<Hamamatsu>(new Hamamatsu(static_cast<Vec&&>(pos),glue_eff));
+const double Hamamatsu_width=4;
+inline std::shared_ptr<SquaredSilicon> hamamatsu(Vec&&pos,double glue_eff){
+	return std::shared_ptr<SquaredSilicon>(new SquaredSilicon(static_cast<Vec&&>(pos),Hamamatsu_width,0.5,glue_eff));
 }
 #endif

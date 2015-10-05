@@ -16,8 +16,8 @@ int main(int,char**){
 	auto time_diff=make_shared<SignalSumm>();
 	for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
 		auto allside=make_shared<SignalSortAndSelect>(2);
-		for(double z=-Hamamatsu::Width()/2.0;z<=Hamamatsu::Width();z+=Hamamatsu::Width())
-			for(double y=-Hamamatsu::Width()*1.5;y<=Hamamatsu::Width()*2;y+=Hamamatsu::Width()){
+		for(double z=-Hamamatsu_width/2.0;z<=Hamamatsu_width;z+=Hamamatsu_width)
+			for(double y=-Hamamatsu_width*1.5;y<=Hamamatsu_width*2;y+=Hamamatsu_width){
 				auto phm=hamamatsu({y,z},1.0);
 				scintillator.Surface(0,side)>>phm;
 				allside<<phm->Time();

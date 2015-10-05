@@ -6,6 +6,6 @@
 #include "silicon.h"
 const size_t ev_n=10000;
 Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/4.0,ScinSize[1]/4.0},
-PhmStep_edge={Hamamatsu::Width(),Hamamatsu::Width(),Hamamatsu::Width()},
-PhmStep_flat={Hamamatsu::Width(),Hamamatsu::Width()};
+PhmStep_edge={Hamamatsu_width,Hamamatsu_width,Hamamatsu_width},
+PhmStep_flat={Hamamatsu_width,Hamamatsu_width};
 #endif 
