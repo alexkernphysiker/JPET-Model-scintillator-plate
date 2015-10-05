@@ -15,7 +15,7 @@ int main(int,char**){
 	{
 		for(size_t dimension=0;dimension<2;dimension++){
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
-				auto allside=make_shared<SignalSortAndSelect2>(0);
+				auto allside=make_shared<SignalSortAndSelect2>(2);
 				for(double x=PhmStep_edge[dimension]/2.0;x<ScinSize[dimension];x+=PhmStep_edge[dimension])
 					for(double z=PhmStep_edge[2]/2.0;z<ScinSize[2];z+=PhmStep_edge[2]){
 						auto phm=hamamatsu({x,z},1.0);
@@ -31,7 +31,7 @@ int main(int,char**){
 			auto allside=make_shared<SignalSortAndSelect2>(0);
 			for(double x=PhmStep_flat[0]/2.0;x<ScinSize[0];x+=PhmStep_flat[0])
 				for(double y=PhmStep_flat[1]/2.0;y<ScinSize[1];y+=PhmStep_flat[1]){
-					auto phm=hamamatsu({x,y},1.0);
+					auto phm=hamamatsu_edgeless({x,y},1.0);
 					scintillator.Surface(2,RectDimensions::Left)>>phm;
 					allside<<phm->Time();
 				}
