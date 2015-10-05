@@ -33,4 +33,7 @@ const double Hamamatsu_width=4;
 inline std::shared_ptr<SquaredSilicon> hamamatsu(Vec&&pos,double glue_eff){
 	return std::shared_ptr<SquaredSilicon>(new SquaredSilicon(static_cast<Vec&&>(pos),Hamamatsu_width,0.5,glue_eff));
 }
+inline std::shared_ptr<SquaredSilicon> hamamatsu_edgeless(Vec&&pos,double glue_eff){
+	return std::shared_ptr<SquaredSilicon>(new SquaredSilicon(static_cast<Vec&&>(pos),Hamamatsu_width,0.0,glue_eff));
+}
 #endif
