@@ -17,7 +17,7 @@ int main(int,char**){
 		auto trigger=make_shared<AllSignalsPresent>();
 		for(size_t dimension=0;dimension<2;dimension++){
 			for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
-				auto allside=make_shared<SignalSortAndSelect2>(1);
+				auto allside=make_shared<SignalSortAndSelect2>(2);
 				for(double x=PhmStep_edge[dimension]/2.0;x<ScinSize[dimension];x+=PhmStep_edge[dimension])
 					for(double z=PhmStep_edge[2]/2.0;z<ScinSize[2];z+=PhmStep_edge[2]){
 						auto phm=hamamatsu({x,z},1.0);
