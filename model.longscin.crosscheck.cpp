@@ -2,7 +2,7 @@
 // GPL v 3.0 license
 #include <iostream>
 #include <sstream>
-#include <math_h/gnuplot/gnuplot.h>
+#include <gnuplot_wrap.h>
 #include <signal_processing.h>
 #include <signal_statistics.h>
 #include "plastic_scin.h"
