@@ -1,5 +1,5 @@
 // this file is distributed under 
-// GPL v 3.0 license
+// MIT license
 #include <interpolate.h>
 #include <randomfunc.h>
 #include "plastic_scin.h"
