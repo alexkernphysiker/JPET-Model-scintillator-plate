@@ -1,7 +1,7 @@
 // this file is distributed under 
 // MIT license
-#include <interpolate.h>
-#include <randomfunc.h>
+#include <math_h/interpolate.h>
+#include <math_h/randomfunc.h>
 #include "plastic_scin.h"
 using namespace std;
 const double refraction=1.58;

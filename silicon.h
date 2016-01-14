@@ -2,11 +2,11 @@
 // MIT license
 #ifndef fYoigiwl
 #define fYoigiwl
-#include <rectscin.h>
-#include <lightguide.h>
-#include <sensitive.h>
-#include <photon2signal.h>
-#include <signal_processing.h>
+#include <RectScin/rectscin.h>
+#include <RectScin/lightguide.h>
+#include <RectScin/sensitive.h>
+#include <RectScin/photon2signal.h>
+#include <RectScin/signal_processing.h>
 class SiliconPhm:public PhotoSensitiveSurfaceWithTTS{
 public:
 	SiliconPhm(std::vector<Pair>&&dimensions,double glue_eff);

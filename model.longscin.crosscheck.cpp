@@ -3,8 +3,8 @@
 #include <iostream>
 #include <sstream>
 #include <gnuplot_wrap.h>
-#include <signal_processing.h>
-#include <signal_statistics.h>
+#include <RectScin/signal_processing.h>
+#include <RectScin/signal_statistics.h>
 #include "plastic_scin.h"
 #include "silicon.h"
 #include "model.params.cc"

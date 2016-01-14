@@ -2,8 +2,8 @@
 // MIT license
 #include <iostream>
 #include <sstream>
-#include <signal_processing.h>
-#include <signal_statistics.h>
+#include <RectScin/signal_processing.h>
+#include <RectScin/signal_statistics.h>
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
