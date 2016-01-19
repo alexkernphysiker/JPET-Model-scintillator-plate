@@ -2,6 +2,7 @@ Library for Monte Carlo simulation of photons movement in scintillator plate wit
 ======================================================================================================
 
 The programs create multicolumn text files with signals from photomultipliers for further analysis with Irina-qt
+(https://github.com/alexkernphysiker/Irina-qt.git)
 
 
 
