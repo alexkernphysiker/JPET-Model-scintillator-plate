@@ -7,6 +7,9 @@
 #include "plastic_scin.h"
 #include "silicon.h"
 using namespace std;
+using namespace MathTemplates;
+using namespace RectangularScintillator;
+using namespace Model;
 #include "model.params.cc"
 int main(int,char**){
 	RANDOM engine;

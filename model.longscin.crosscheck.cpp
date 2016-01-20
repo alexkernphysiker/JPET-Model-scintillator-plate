@@ -7,8 +7,12 @@
 #include <RectScin/signal_statistics.h>
 #include "plastic_scin.h"
 #include "silicon.h"
-#include "model.params.cc"
 using namespace std;
+using namespace MathTemplates;
+using namespace GnuplotWrap;
+using namespace RectangularScintillator;
+using namespace Model;
+#include "model.params.cc"
 int main(int,char**){
 	RANDOM engine;
 	BC420 scintillator({make_pair(-150,150),make_pair(-9.5,9.5),make_pair(-3.5,3.5)});

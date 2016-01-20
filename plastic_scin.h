@@ -2,10 +2,14 @@
 // MIT license
 #ifndef UEGaTsDc
 #define UEGaTsDc
-#include <RectScin/rectscin.h>
-class BC420:public RectangularScintillator{
-public:
-    BC420(std::vector<Pair>&& dimensions);
-    virtual ~BC420();
+#include <RectScin/scintillator.h>
+namespace Model{
+	using namespace std;
+	using namespace RectangularScintillator;
+	class BC420:public Scintillator{
+	public:
+		BC420(vector<Pair>&& dimensions);
+		virtual ~BC420();
+	};
 };
 #endif
