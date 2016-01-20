@@ -8,7 +8,6 @@ The programs create multicolumn text files with signals from photomultipliers fo
 
 Compiling
 =========
-For using this library, please run:
 
 git clone https://github.com/alexkernphysiker/JPET-Model-scintillator-plate.git
 
