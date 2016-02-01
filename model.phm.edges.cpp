@@ -10,7 +10,9 @@ using namespace std;
 using namespace MathTemplates;
 using namespace RectangularScintillator;
 using namespace Model;
-#include "model.params.cc"
+const size_t ev_n=10000;
+Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/8.0,ScinSize[1]/8.0},
+PhmStep_edge={Hamamatsu_width,Hamamatsu_width,Hamamatsu_width};
 int main(int,char**){
 	RANDOM engine;
 	for(size_t order_statistic=0;order_statistic<3;order_statistic++){

@@ -12,7 +12,7 @@ using namespace MathTemplates;
 using namespace GnuplotWrap;
 using namespace RectangularScintillator;
 using namespace Model;
-#include "model.params.cc"
+const size_t ev_n=10000;
 int main(int,char**){
 	RANDOM engine;
 	BC420 scintillator({make_pair(-150,150),make_pair(-9.5,9.5),make_pair(-3.5,3.5)});

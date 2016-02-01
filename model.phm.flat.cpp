@@ -10,7 +10,10 @@ using namespace std;
 using namespace MathTemplates;
 using namespace RectangularScintillator;
 using namespace Model;
-#include "model.params.cc"
+const size_t ev_n=10000;
+Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/8.0,ScinSize[1]/8.0},
+PhmStep_edge={Hamamatsu_width,Hamamatsu_width,Hamamatsu_width},
+PhmStep_flat={Hamamatsu_width,Hamamatsu_width};
 int main(int,char**){
 	RANDOM engine;
 	BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
@@ -30,7 +33,8 @@ int main(int,char**){
 				allside>>index>>time;
 				output<<index<<time;
 			}
-		}{
+		}
+		{
 			auto allside=make_shared<SignalSortAndSelect2>(0);
 			for(double x=PhmStep_flat[0]/2.0;x<ScinSize[0];x+=PhmStep_flat[0])
 				for(double y=PhmStep_flat[1]/2.0;y<ScinSize[1];y+=PhmStep_flat[1]){
