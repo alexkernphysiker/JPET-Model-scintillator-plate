@@ -38,5 +38,3 @@ model.longscin.crosscheck.cpp - model of long scintillator with matrices of hama
 https://github.com/alexkernphysiker/SiPhmMatrix.git
 
 model.phm.edged.cpp - model of scintillator plate with four edges covered with hamamatsu silicon photosensors. Calculation is performed for testing spatial resolution of such detector.
-
-model.phm.flat.cpp - model of scintillator plate with four edges and one side covered with hamamatsu silicon photosensors. Calculation is performed for testing spatial resolution of such detector.
