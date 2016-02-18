@@ -13,4 +13,4 @@ add_library(modelfiles SHARED model_objects/plastic_scin.cpp model_objects/silic
 add_executable(Model.longscin model.longscin.crosscheck.cpp)
 target_link_libraries(Model.longscin rectscin modelfiles gpwrap)
 add_executable(Model.edges model.phm.edges.cpp)
-target_link_libraries(Model.edges rectscin modelfiles)
+target_link_libraries(Model.edges rectscin modelfiles gpwrap)
