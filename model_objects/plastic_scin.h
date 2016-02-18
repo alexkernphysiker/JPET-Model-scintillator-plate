@@ -8,7 +8,8 @@ namespace Model{
 	using namespace RectangularScintillator;
 	class BC420:public Scintillator{
 	public:
-		BC420(vector<Pair>&& dimensions);
+		BC420(const vector<Pair>& dimensions);
+		BC420(vector<Pair>&&dimensions);
 		virtual ~BC420();
 	};
 };
