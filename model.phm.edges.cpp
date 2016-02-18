@@ -13,13 +13,13 @@ using namespace MathTemplates;
 using namespace GnuplotWrap;
 using namespace RectangularScintillator;
 using namespace Model;
-const size_t ev_n=1000;
+const size_t ev_n=3000;
 Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/4.0,ScinSize[1]/4.0},
 PhmStep_edge={Hamamatsu_width,Hamamatsu_width,Hamamatsu_width};
 int main(int,char**){
 	RANDOM engine;
 	Plotter::Instance().SetOutput(".","model.phm.egdes.plot");
-	for(size_t order_statistic=0;order_statistic<3;order_statistic++){
+	for(size_t order_statistic=0;order_statistic<4;order_statistic++){
 		Distribution2D<double> place_reconstruction(BinsByStep(-2.0,0.02,+2.0),BinsByStep(-2.0,0.02,+2.0));
 		BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 		auto output=make_shared<SignalsToFile>();
@@ -62,6 +62,8 @@ int main(int,char**){
 					scintillator.RegisterGamma({x,y,distrz(engine)},3000,engine);
 				printf("END %s\n",name.str().c_str());
 			}
+		PlotDistribution2D<double>(sp2).Distr(place_reconstruction,to_string(order_statistic));
+		PlotDistribution2D<double>(normal).Distr(place_reconstruction,to_string(order_statistic));
 	}
 	printf("GOODBYE!\n");
 }
