@@ -13,8 +13,8 @@ using namespace MathTemplates;
 using namespace GnuplotWrap;
 using namespace RectangularScintillator;
 using namespace Model;
-const size_t ev_n=3000;
-Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/4.0,ScinSize[1]/4.0},
+const size_t ev_n=5000;
+Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/6.0,ScinSize[1]/6.0},
 PhmStep_edge={Hamamatsu_width,Hamamatsu_width,Hamamatsu_width};
 int main(int,char**){
 	RANDOM engine;
