@@ -62,8 +62,8 @@ int main(int,char**){
 					scintillator.RegisterGamma({x,y,distrz(engine)},3000,engine);
 				printf("END %s\n",name.str().c_str());
 			}
-		PlotDistribution2D<double>(sp2).Distr(place_reconstruction,to_string(order_statistic));
-		PlotDistribution2D<double>(normal).Distr(place_reconstruction,to_string(order_statistic));
+		PlotHist2d<double>(sp2).Distr(place_reconstruction,to_string(order_statistic));
+		PlotHist2d<double>(normal).Distr(place_reconstruction,to_string(order_statistic));
 	}
 	printf("GOODBYE!\n");
 }
