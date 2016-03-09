@@ -144,6 +144,6 @@ namespace Model{
 	auto time_distr=TimeDistribution2(0.005,0.2,1.5);
 	BC420::BC420(const vector<Pair>&dimensions):
 	Scintillator(dimensions,refraction,time_distr,LAMBDA,Absorption.func()){}
-	BC420::BC420(vector<Pair>&&dimensions):BC420(dimensions){}
+	BC420::BC420(const vector<Pair>&&dimensions):BC420(dimensions){}
 	BC420::~BC420(){}
 };

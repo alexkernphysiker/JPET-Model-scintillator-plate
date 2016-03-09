@@ -14,8 +14,8 @@ using namespace GnuplotWrap;
 using namespace RectangularScintillator;
 using namespace Model;
 const size_t ev_n=5000;
-Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/8.0,ScinSize[1]/8.0},
-PhmStep_edge={Hamamatsu_width,Hamamatsu_width,Hamamatsu_width};
+Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/6.0,ScinSize[1]/6.0},
+PhmStep_edge={4,4,4};
 int main(int,char**){
 	RANDOM engine;
 	Plotter::Instance().SetOutput(".","model.phm.egdes.plot");
