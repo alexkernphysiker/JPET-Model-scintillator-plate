@@ -40,33 +40,32 @@ namespace Model{
 					       make_pair(920,0.36),
 					       make_pair(940,0.30)
 	});
-	SiliconPhm::SiliconPhm(vector< Pair >&& dimensions, double glue_eff):
-	PhotoSensitiveSurfaceWithTTS(static_cast<decltype(dimensions)&&>(dimensions),glue_eff,Efficiency.func(),0.128){
+	SiliconPhm::SiliconPhm(const vector< Pair >&dimensions,const double glue_eff):PhotoSensitiveSurfaceWithTTS(dimensions,glue_eff,Efficiency.func(),0.128){
 		time_signal=make_shared<WeightedTimeSignal>();
 		time_signal->AddSummand(0,1);
 		ampl_signal=make_shared<AmplitudeSignal>();
 		operator>>(time_signal)>>ampl_signal;
 	}
 	SiliconPhm::~SiliconPhm(){}
-	shared_ptr< SignalProducent > SiliconPhm::Amplitude(){return ampl_signal;}
-	shared_ptr< SignalProducent > SiliconPhm::Time(){return time_signal;}
+	const shared_ptr< SignalProducent > SiliconPhm::Amplitude()const{return ampl_signal;}
+	const shared_ptr< SignalProducent > SiliconPhm::Time()const{return time_signal;}
 	
-	SquaredSilicon::SquaredSilicon(Vec&& pos,double width,double edge, double glue_eff): 
-	FlatLightguide({
+	SquaredSilicon::SquaredSilicon(const Vec&pos,const double width,const double edge,const double glue_eff)
+	:FlatLightguide({
 		make_pair(pos[0]-(width/2.0),pos[0]+(width/2.0)),
-		       make_pair(pos[1]-(width/2.0),pos[1]+(width/2.0))
+		make_pair(pos[1]-(width/2.0),pos[1]+(width/2.0))
 	}, glue_eff, 1, 0){
 		phm=SiPhm({
 			make_pair(pos[0]-(width/2.0-edge),pos[0]+(width/2.0-edge)),
-			  make_pair(pos[1]-(width/2.0-edge),pos[1]+(width/2.0-edge))
+			make_pair(pos[1]-(width/2.0-edge),pos[1]+(width/2.0-edge))
 		},1);
 		operator>>(phm);
 	}
 	SquaredSilicon::~SquaredSilicon(){}
-	shared_ptr< SignalProducent > SquaredSilicon::Amplitude(){
+	const shared_ptr< SignalProducent > SquaredSilicon::Amplitude()const{
 		return phm->Amplitude();
 	}
-	shared_ptr< SignalProducent > SquaredSilicon::Time(){
+	const shared_ptr< SignalProducent > SquaredSilicon::Time()const{
 		return phm->Time();
 	}
 };

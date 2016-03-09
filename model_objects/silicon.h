@@ -12,32 +12,31 @@ namespace Model{
 	using namespace RectangularScintillator;
 	class SiliconPhm:public PhotoSensitiveSurfaceWithTTS{
 	public:
-		SiliconPhm(vector<Pair>&&dimensions,double glue_eff);
+		SiliconPhm(const vector<Pair>&dimensions,const double glue_eff);
 		virtual ~SiliconPhm();
-		shared_ptr<SignalProducent> Time();
-		shared_ptr<SignalProducent> Amplitude();
+		const shared_ptr<SignalProducent> Time()const;
+		const shared_ptr<SignalProducent> Amplitude()const;
 	private:
 		shared_ptr<WeightedTimeSignal> time_signal;
 		shared_ptr<AmplitudeSignal> ampl_signal;
 	};
-	inline shared_ptr<SiliconPhm> SiPhm(vector<Pair>&&dimensions,double glue_eff){
-		return shared_ptr<SiliconPhm>(new SiliconPhm(static_cast<decltype(dimensions)&&>(dimensions),glue_eff));
+	inline const shared_ptr<SiliconPhm> SiPhm(const vector<Pair>&&dimensions,const double glue_eff){
+		return shared_ptr<SiliconPhm>(new SiliconPhm(dimensions,glue_eff));
 	}
 	class SquaredSilicon:public FlatLightguide{
 	public:
-		SquaredSilicon(Vec&&pos,double width,double edge, double glue_eff);
+		SquaredSilicon(const Vec&pos,const double width,const double edge,const double glue_eff);
 		virtual ~SquaredSilicon();
-		shared_ptr<SignalProducent> Time();
-		shared_ptr<SignalProducent> Amplitude();
+		const shared_ptr<SignalProducent> Time()const;
+		const shared_ptr<SignalProducent> Amplitude()const;
 	private:
 		shared_ptr<SiliconPhm> phm;
 	};
-	const double Hamamatsu_width=4;
-	inline shared_ptr<SquaredSilicon> hamamatsu(Vec&&pos,double glue_eff){
-		return shared_ptr<SquaredSilicon>(new SquaredSilicon(static_cast<Vec&&>(pos),Hamamatsu_width,0.5,glue_eff));
+	inline const shared_ptr<SquaredSilicon> hamamatsu(const Vec&&pos,const double glue_eff){
+		return shared_ptr<SquaredSilicon>(new SquaredSilicon(pos,4,0.5,glue_eff));
 	}
-	inline shared_ptr<SquaredSilicon> hamamatsu_edgeless(Vec&&pos,double glue_eff){
-		return shared_ptr<SquaredSilicon>(new SquaredSilicon(static_cast<Vec&&>(pos),Hamamatsu_width,0.0,glue_eff));
+	inline const shared_ptr<SquaredSilicon> hamamatsu_edgeless(const Vec&&pos,const double glue_eff){
+		return shared_ptr<SquaredSilicon>(new SquaredSilicon(pos,4,0.0,glue_eff));
 	}
 };
 #endif
