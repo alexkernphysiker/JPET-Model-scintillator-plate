@@ -14,13 +14,13 @@ using namespace GnuplotWrap;
 using namespace RectangularScintillator;
 using namespace Model;
 const size_t ev_n=5000;
-Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/6.0,ScinSize[1]/6.0},
+Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/4.0,ScinSize[1]/4.0},
 PhmStep_edge={4,4,4};
 int main(int,char**){
 	RANDOM engine;
-	Plotter::Instance().SetOutput(".","model.phm.egdes.plot");
-	for(size_t order_statistic=0;order_statistic<4;order_statistic++){
-		Distribution2D<double> place_reconstruction(BinsByStep(-2.0,0.02,+2.0),BinsByStep(-2.0,0.02,+2.0));
+	Plotter::Instance().SetOutput(".","model.phm.edges.plot");
+	for(size_t order_statistic=0;order_statistic<3;order_statistic++){
+		Distribution2D<double> place_reconstruction(BinsByStep(-8.0,0.1,+8.0),BinsByStep(-8.0,0.1,+8.0));
 		BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 		auto output=make_shared<SignalsToFile>();
 		{
