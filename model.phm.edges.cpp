@@ -20,7 +20,7 @@ int main(int,char**){
 	RANDOM engine;
 	Plotter::Instance().SetOutput(".","model.phm.edges.plot");
 	for(size_t order_statistic=0;order_statistic<3;order_statistic++){
-		Distribution2D<double> place_reconstruction(BinsByStep(-10.0,0.1,+10.0),BinsByStep(-10.0,0.1,+10.0));
+		Distribution2D<double> place_reconstruction(BinsByStep(-10.0,0.25,+10.0),BinsByStep(-10.0,0.25,+10.0));
 		BC420 scintillator({make_pair(0,ScinSize[0]),make_pair(0,ScinSize[1]),make_pair(0,ScinSize[2])});
 		auto output=make_shared<SignalsToFile>();
 		{
