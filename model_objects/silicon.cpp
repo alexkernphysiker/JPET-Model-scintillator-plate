@@ -5,40 +5,40 @@ namespace Model{
 	using namespace std;
 	using namespace MathTemplates;
 	using namespace RectangularScintillator;
-	LinearInterpolation<double> Efficiency({
-					       make_pair(140,0),
-					       make_pair(180,0),
-					       make_pair(200,0.33),
-					       make_pair(340,0.43),
-					       make_pair(380,0.45),
-					       make_pair(400,0.49),
-					       make_pair(420,0.54),
-					       make_pair(440,0.58),
-					       make_pair(460,0.64),
-					       make_pair(480,0.68),
-					       make_pair(500,0.72),
-					       make_pair(520,0.73),
-					       make_pair(540,0.76),
-					       make_pair(560,0.79),
-					       make_pair(580,0.82),
-					       make_pair(600,0.82),
-					       make_pair(620,0.83),
-					       make_pair(640,0.84),
-					       make_pair(660,0.84),
-					       make_pair(680,0.83),
-					       make_pair(700,0.82),
-					       make_pair(720,0.80),
-					       make_pair(740,0.78),
-					       make_pair(760,0.75),
-					       make_pair(780,0.73),
-					       make_pair(800,0.69),
-					       make_pair(820,0.66),
-					       make_pair(840,0.61),
-					       make_pair(860,0.54),
-					       make_pair(880,0.48),
-					       make_pair(900,0.43),
-					       make_pair(920,0.36),
-					       make_pair(940,0.30)
+	LinearInterpolation<double> Efficiency(SortedPoints<double>{
+					       point<double>(140,0),
+					       point<double>(180,0),
+					       point<double>(200,0.33),
+					       point<double>(340,0.43),
+					       point<double>(380,0.45),
+					       point<double>(400,0.49),
+					       point<double>(420,0.54),
+					       point<double>(440,0.58),
+					       point<double>(460,0.64),
+					       point<double>(480,0.68),
+					       point<double>(500,0.72),
+					       point<double>(520,0.73),
+					       point<double>(540,0.76),
+					       point<double>(560,0.79),
+					       point<double>(580,0.82),
+					       point<double>(600,0.82),
+					       point<double>(620,0.83),
+					       point<double>(640,0.84),
+					       point<double>(660,0.84),
+					       point<double>(680,0.83),
+					       point<double>(700,0.82),
+					       point<double>(720,0.80),
+					       point<double>(740,0.78),
+					       point<double>(760,0.75),
+					       point<double>(780,0.73),
+					       point<double>(800,0.69),
+					       point<double>(820,0.66),
+					       point<double>(840,0.61),
+					       point<double>(860,0.54),
+					       point<double>(880,0.48),
+					       point<double>(900,0.43),
+					       point<double>(920,0.36),
+					       point<double>(940,0.30)
 	});
 	SiliconPhm::SiliconPhm(const vector< Pair >&dimensions,const double glue_eff):PhotoSensitiveSurfaceWithTTS(dimensions,glue_eff,Efficiency.func(),0.128){
 		time_signal=make_shared<WeightedTimeSignal>();
@@ -54,11 +54,11 @@ namespace Model{
 	:FlatLightguide({
 		make_pair(pos[0]-(width/2.0),pos[0]+(width/2.0)),
 		make_pair(pos[1]-(width/2.0),pos[1]+(width/2.0))
-	}, glue_eff, 1, 0){
+	}, glue_eff, 1.0, 0.0){
 		phm=SiPhm({
 			make_pair(pos[0]-(width/2.0-edge),pos[0]+(width/2.0-edge)),
 			make_pair(pos[1]-(width/2.0-edge),pos[1]+(width/2.0-edge))
-		},1);
+		},1.0);
 		operator>>(phm);
 	}
 	SquaredSilicon::~SquaredSilicon(){}

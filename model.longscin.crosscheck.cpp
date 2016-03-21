@@ -42,7 +42,7 @@ int main(int,char**){
 			scintillator.RegisterGamma({0,0,0},N,engine);
 			printf("%i enevts         \r",cnt);
 		}
-		sigma_func<<make_pair(N,time_diff_stat->data().get().delta());
+		sigma_func<<point<double>(N,time_diff_stat->data()().delta());
 		printf("\n");
 	}
 	Plotter::Instance().SetOutput(".","crosscheck");

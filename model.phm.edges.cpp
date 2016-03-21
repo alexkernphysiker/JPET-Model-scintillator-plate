@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 #include <gnuplot_wrap.h>
-#include <math_h/hist.h>
+#include <math_h/structures.h>
 #include <RectScin/signal_processing.h>
 #include <RectScin/signal_statistics.h>
 #include <plastic_scin.h>
@@ -25,7 +25,7 @@ int main(int,char**){
 		auto output=make_shared<SignalsToFile>();
 		{
 			auto hist_fill=make_shared<SignalsAnalyse>([&place_reconstruction](const Vec&P){
-				place_reconstruction<<make_pair(P[0],P[1]);
+				place_reconstruction.Fill(make_pair(P[0],P[1]));
 			});
 			auto trigger=make_shared<AllSignalsPresent>();
 			for(size_t dimension=0;dimension<2;dimension++){
