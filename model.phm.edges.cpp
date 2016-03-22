@@ -13,7 +13,7 @@ using namespace MathTemplates;
 using namespace GnuplotWrap;
 using namespace RectangularScintillator;
 using namespace Model;
-const size_t ev_n=10000;
+const size_t ev_n=5000;
 Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/8.0,ScinSize[1]/8.0},
 PhmStep_edge={4,4,4};
 int main(int,char**){
