@@ -1,10 +1,5 @@
-Library for Monte Carlo simulation of photons movement in scintillator plate with silicon photosensors
-======================================================================================================
-
-The programs create multicolumn text files with signals from photomultipliers for further analysis with Irina-qt
-(https://github.com/alexkernphysiker/Irina-qt.git)
-
-
+Model of scintillation plate detector for J-PET project
+=======================================================
 
 Compiling
 =========
@@ -14,7 +9,6 @@ Compiling
 	git submodule update --init --recursive
 	cmake .
 	make
-
 
 
 Directories
@@ -34,7 +28,9 @@ Models
 ======
 
 	model.longscin.crosscheck.cpp
-model of long scintillator with matrices of hamamatsu silicon photosensors on two it's edges. This is crosscheck for comparing with previous model https://github.com/alexkernphysiker/SiPhmMatrix.git
+model of long scintillator with matrices of hamamatsu silicon photosensors on two it's edges. 
+This is crosscheck for comparing with previous model https://github.com/alexkernphysiker/SiPhmMatrix.git
 
 	model.phm.edged.cpp
-model of scintillator plate with four edges covered with hamamatsu silicon photosensors. Calculation is performed for testing spatial resolution of such detector.
+model of scintillator plate with four edges covered with hamamatsu silicon photosensors. 
+Calculation is performed for testing spatial resolution of such detector.
