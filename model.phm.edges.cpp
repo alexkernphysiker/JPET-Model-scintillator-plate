@@ -25,7 +25,7 @@ int main(int,char**){
 		auto output=make_shared<SignalsToFile>();
 		{
 			auto hist_fill=make_shared<SignalsAnalyse>([&place_reconstruction](const Vec&P){
-				place_reconstruction.Fill(make_pair(P[0],P[1]));
+				place_reconstruction.Fill(P[0],P[1]);
 			});
 			auto trigger=make_shared<AllSignalsPresent>();
 			for(size_t dimension=0;dimension<2;dimension++){
