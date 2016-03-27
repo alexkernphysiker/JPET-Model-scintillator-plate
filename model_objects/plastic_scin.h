@@ -4,12 +4,10 @@
 #define UEGaTsDc
 #include <RectScin/scintillator.h>
 namespace Model{
-	using namespace std;
-	using namespace RectangularScintillator;
-	class BC420:public Scintillator{
+	class BC420:public RectangularScintillator::Scintillator{
 	public:
-		BC420(const vector<Pair>& dimensions);
-		BC420(const vector<Pair>&&dimensions);
+		BC420(const std::vector<RectangularScintillator::Pair>& dimensions);
+		BC420(const std::vector<RectangularScintillator::Pair>&&dimensions);
 		virtual ~BC420();
 	};
 };

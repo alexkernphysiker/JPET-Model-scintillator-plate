@@ -8,35 +8,33 @@
 #include <RectScin/photon2signal.h>
 #include <RectScin/signal_processing.h>
 namespace Model{
-	using namespace std;
-	using namespace RectangularScintillator;
-	class SiliconPhm:public PhotoSensitiveSurfaceWithTTS{
+	class SiliconPhm:public RectangularScintillator::PhotoSensitiveSurfaceWithTTS{
 	public:
-		SiliconPhm(const vector<Pair>&dimensions,const double glue_eff);
+		SiliconPhm(const std::vector<RectangularScintillator::Pair>&dimensions,const double glue_eff);
 		virtual ~SiliconPhm();
-		const shared_ptr<SignalProducent> Time()const;
-		const shared_ptr<SignalProducent> Amplitude()const;
+		const std::shared_ptr<RectangularScintillator::SignalProducent> Time()const;
+		const std::shared_ptr<RectangularScintillator::SignalProducent> Amplitude()const;
 	private:
-		shared_ptr<WeightedTimeSignal> time_signal;
-		shared_ptr<AmplitudeSignal> ampl_signal;
+		std::shared_ptr<RectangularScintillator::WeightedTimeSignal> time_signal;
+		std::shared_ptr<RectangularScintillator::AmplitudeSignal> ampl_signal;
 	};
-	inline const shared_ptr<SiliconPhm> SiPhm(const vector<Pair>&&dimensions,const double glue_eff){
-		return shared_ptr<SiliconPhm>(new SiliconPhm(dimensions,glue_eff));
+	inline const std::shared_ptr<SiliconPhm> SiPhm(const std::vector<RectangularScintillator::Pair>&&dimensions,const double glue_eff){
+		return std::shared_ptr<SiliconPhm>(new SiliconPhm(dimensions,glue_eff));
 	}
-	class SquaredSilicon:public FlatLightguide{
+	class SquaredSilicon:public RectangularScintillator::FlatLightguide{
 	public:
-		SquaredSilicon(const Vec&pos,const double width,const double edge,const double glue_eff);
+		SquaredSilicon(const RectangularScintillator::Vec&pos,const double width,const double edge,const double glue_eff);
 		virtual ~SquaredSilicon();
-		const shared_ptr<SignalProducent> Time()const;
-		const shared_ptr<SignalProducent> Amplitude()const;
+		const std::shared_ptr<RectangularScintillator::SignalProducent> Time()const;
+		const std::shared_ptr<RectangularScintillator::SignalProducent> Amplitude()const;
 	private:
-		shared_ptr<SiliconPhm> phm;
+		std::shared_ptr<SiliconPhm> phm;
 	};
-	inline const shared_ptr<SquaredSilicon> hamamatsu(const Vec&&pos,const double glue_eff){
-		return shared_ptr<SquaredSilicon>(new SquaredSilicon(pos,4,0.5,glue_eff));
+	inline const std::shared_ptr<SquaredSilicon> hamamatsu(const RectangularScintillator::Vec&&pos,const double glue_eff){
+		return std::shared_ptr<SquaredSilicon>(new SquaredSilicon(pos,4,0.5,glue_eff));
 	}
-	inline const shared_ptr<SquaredSilicon> hamamatsu_edgeless(const Vec&&pos,const double glue_eff){
-		return shared_ptr<SquaredSilicon>(new SquaredSilicon(pos,4,0.0,glue_eff));
+	inline const std::shared_ptr<SquaredSilicon> hamamatsu_edgeless(const RectangularScintillator::Vec&&pos,const double glue_eff){
+		return std::shared_ptr<SquaredSilicon>(new SquaredSilicon(pos,4,0.0,glue_eff));
 	}
 };
 #endif
