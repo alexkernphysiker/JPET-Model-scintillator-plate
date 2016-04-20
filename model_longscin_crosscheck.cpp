@@ -5,8 +5,8 @@
 #include <gnuplot_wrap.h>
 #include <RectScin/signal_processing.h>
 #include <RectScin/signal_statistics.h>
-#include <plastic_scin.h>
-#include <silicon.h>
+#include "model_objects/plastic_scin.h"
+#include "model_objects/silicon.h"
 using namespace std;
 using namespace MathTemplates;
 using namespace GnuplotWrap;

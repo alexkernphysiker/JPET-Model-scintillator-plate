@@ -1,15 +1,19 @@
 cmake_minimum_required(VERSION 2.6)
 project(PlateStecintillator)
-option(debug "Compile in debug mode" OFF)
-if(debug)
-  set(CMAKE_BUILD_TYPE Debug)
-endif()
-set(CMAKE_CXX_FLAGS "-pthread -std=gnu++11 -fPIC")
+
 add_subdirectory(RectangularScintillator)
 include_directories(RectangularScintillator/include)
-include_directories(model_objects)
-add_library(modelfiles SHARED model_objects/plastic_scin.cpp model_objects/silicon.cpp)
-add_executable(Model.longscin model.longscin.crosscheck.cpp)
-target_link_libraries(Model.longscin rectscin modelfiles gpwrap)
-add_executable(Model.edges model.phm.edges.cpp)
-target_link_libraries(Model.edges rectscin modelfiles gpwrap)
+
+set(CMAKE_CXX_FLAGS -pthread)
+add_definitions(-std=c++11 -Wall -Wunused-parameter)
+
+file(GLOB SOURCES *.cpp)
+file(GLOB MODEL model_objects/*.cpp)
+
+add_library(modelfiles SHARED ${MODEL})
+
+foreach(source ${SOURCES})
+	get_filename_component(exec ${source} NAME_WE)
+	add_executable(${exec} ${source})
+	target_link_libraries(${exec} rectscin modelfiles gpwrap)
+endforeach()
