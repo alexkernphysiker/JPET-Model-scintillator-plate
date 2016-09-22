@@ -57,13 +57,13 @@ int main(int,char**){
 				ostringstream name,name2;
 				name<<"DATA."<<x<<"."<<y<<".edges."<<order_statistic<<".txt";
 				output->Redirect(name.str());
-				printf("BEGIN %s\n",name.str().c_str());
+				cout<<"BEGIN "<<name.str()<<endl;
 				for(size_t cnt=0;cnt<ev_n;cnt++)
 					scintillator.RegisterGamma({x,y,distrz(engine)},3000,engine);
-				printf("END %s\n",name.str().c_str());
+				cout<<"END "<<name.str()<<endl;
 			}
 		PlotHist2d<double>(sp2).Distr(place_reconstruction,to_string(order_statistic));
 		PlotHist2d<double>(normal).Distr(place_reconstruction,to_string(order_statistic));
 	}
-	printf("GOODBYE!\n");
+	cout<<"GOODBYE!"<<endl;
 }

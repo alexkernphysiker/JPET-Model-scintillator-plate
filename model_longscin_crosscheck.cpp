@@ -37,13 +37,13 @@ int main(int,char**){
 				}
 		}
 		time_diff>>time_diff_stat;
-		printf("N=%i\n",N);
+		cout<<"N="<<N<<endl;
 		for(size_t cnt=0;cnt<ev_n;cnt++){
 			scintillator.RegisterGamma({0,0,0},N,engine);
-			printf("%i enevts         \r",cnt);
+			cout<<cnt<<" enevts         \r";
 		}
-		sigma_func<<point<double>(N,time_diff_stat->data().delta());
-		printf("\n");
+		sigma_func<<point<double>(N,time_diff_stat->data().uncertainty());
+		cout<<endl;
 	}
 	Plotter::Instance().SetOutput(".","crosscheck");
 	Plot<double>().Points(sigma_func);
