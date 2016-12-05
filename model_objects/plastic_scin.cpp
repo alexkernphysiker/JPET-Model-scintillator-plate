@@ -8,7 +8,7 @@ namespace Model{
 	using namespace MathTemplates;
 	using namespace RectangularScintillator;
 	const double refraction=1.58;
-	RandomValueGenerator<double>LAMBDA(SortedPoints<double>{
+	auto LAMBDA=make_shared<DistribTable>(SortedPoints<double>{
 		point<double>(359.686,0.686036),
 		point<double>(361.518,1.66851),
 		point<double>(363.089,2.79232),
