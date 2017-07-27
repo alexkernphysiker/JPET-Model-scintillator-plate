@@ -21,20 +21,21 @@ int main(int,char**){
 		auto time_diff_stat=make_shared<SignalStatictics>();
 		auto time_diff=make_shared<SignalSumm>();
 		for(auto side=RectDimensions::Left;side<=RectDimensions::Right;inc(side)){
-			auto allside=make_shared<SignalSortAndSelect>(2);
-			for(double z=-2;z<=4;z+=4)
-				for(double y=-6;y<=8;y+=4){
-					auto phm=hamamatsu({y,z},1.0);
-					scintillator.Surface(0,side)>>phm;
-					allside<<phm->Time();
-				}
-				if(side==RectDimensions::Left)
-					time_diff<<allside;
-				else{
-					auto inv=SignalInvert();
-					allside>>inv;
-					time_diff<<inv;
-				}
+		    auto allside=make_shared<SignalSortAndSelect>(2);
+		    for(double z=-2;z<=4;z+=4){
+			for(double y=-6;y<=8;y+=4){
+			    auto phm=hamamatsu({y,z},1.0);
+			    scintillator.Surface(0,side)>>phm;
+			    allside<<phm->Time();
+			}
+		    }
+		    if(side==RectDimensions::Left){
+			time_diff<<allside;
+		    }else{
+			auto inv=SignalInvert();
+			allside>>inv;
+			time_diff<<inv;
+		    }
 		}
 		time_diff>>time_diff_stat;
 		cout<<"N="<<N<<endl;
