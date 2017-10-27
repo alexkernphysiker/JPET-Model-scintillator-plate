@@ -46,6 +46,6 @@ int main(int,char**){
 		sigma_func<<point<double>(N,time_diff_stat->data().uncertainty());
 		cout<<endl;
 	}
-	Plotter::Instance().SetOutput(".","crosscheck");
-	Plot<double>().Points(sigma_func);
+	Plotter<>::Instance().SetOutput(".","crosscheck");
+	Plot<>().Points(sigma_func);
 }

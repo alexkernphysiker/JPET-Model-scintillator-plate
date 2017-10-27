@@ -8,7 +8,7 @@ namespace Model{
 	using namespace MathTemplates;
 	using namespace RectangularScintillator;
 	const double refraction=1.58;
-	auto LAMBDA=make_shared<DistribTable>(SortedPoints<double>{
+	auto LAMBDA=make_shared<DistribTable>(LinearInterpolation<>({
 		point<double>(359.686,0.686036),
 		point<double>(361.518,1.66851),
 		point<double>(363.089,2.79232),
@@ -124,8 +124,8 @@ namespace Model{
 		point<double>(491.885,0.86031),
 		point<double>(494.241,0.574196),
 		point<double>(496.859,0.428434)
-	});
-	LinearInterpolation<double> Absorption(SortedPoints<double>{
+	}));
+	LinearInterpolation<double> Absorption(Points<>{
 		point<double>(348.842,0.083),
 		point<double>(351.158,0.077),
 		point<double>(354.247,0.069),

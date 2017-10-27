@@ -5,7 +5,7 @@ namespace Model{
 	using namespace std;
 	using namespace MathTemplates;
 	using namespace RectangularScintillator;
-	LinearInterpolation<double> Efficiency(SortedPoints<double>{
+	LinearInterpolation<double> Efficiency(Points<double>{
 					       point<double>(140,0),
 					       point<double>(180,0),
 					       point<double>(200,0.33),
