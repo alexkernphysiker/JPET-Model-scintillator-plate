@@ -17,7 +17,6 @@ const size_t ev_n=5000;
 Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/8.0,ScinSize[1]/8.0},
 PhmStep_edge={4,4,4};
 int main(int,char**){
-	RANDOM engine;
 	Plotter::Instance().SetOutput(".","model.phm.edges.plot");
 	for(size_t order_statistic=0;order_statistic<3;order_statistic++){
 		Distribution2D<double> place_reconstruction(BinsByStep(-10.0,0.25,+10.0),BinsByStep(-10.0,0.25,+10.0));
@@ -51,7 +50,7 @@ int main(int,char**){
 			}
 		}
 		scintillator.Configure(BC420::Options(8,7));
-		uniform_real_distribution<double> distrz(0,ScinSize[2]);
+		RandomUniform<> distrz(0,ScinSize[2]);
 		for(double x=PosStep[0];x<ScinSize[0];x+=PosStep[0])
 			for(double y=PosStep[1];y<ScinSize[1];y+=PosStep[1]){
 				ostringstream name,name2;
@@ -59,7 +58,7 @@ int main(int,char**){
 				output->Redirect(name.str());
 				cout<<"BEGIN "<<name.str()<<endl;
 				for(size_t cnt=0;cnt<ev_n;cnt++)
-					scintillator.RegisterGamma({x,y,distrz(engine)},3000,engine);
+					scintillator.RegisterGamma({x,y,distrz()},3000);
 				cout<<"END "<<name.str()<<endl;
 			}
 		PlotHist2d(sp2).Distr(place_reconstruction,to_string(order_statistic));

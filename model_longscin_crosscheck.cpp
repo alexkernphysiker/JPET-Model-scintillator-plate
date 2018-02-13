@@ -14,7 +14,6 @@ using namespace RectangularScintillator;
 using namespace Model;
 const size_t ev_n=10000;
 int main(int,char**){
-	RANDOM engine;
 	LinearInterpolation<double> sigma_func;
 	for(size_t N=2000;N<7000;N+=100){
 		BC420 scintillator({make_pair(-150,150),make_pair(-9.5,9.5),make_pair(-3.5,3.5)});
@@ -40,7 +39,7 @@ int main(int,char**){
 		time_diff>>time_diff_stat;
 		cout<<"N="<<N<<endl;
 		for(size_t cnt=0;cnt<ev_n;cnt++){
-			scintillator.RegisterGamma({0,0,0},N,engine);
+			scintillator.RegisterGamma({0,0,0},N);
 			cout<<cnt<<" enevts         \r";
 		}
 		sigma_func<<point<double>(N,time_diff_stat->data().uncertainty());
