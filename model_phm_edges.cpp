@@ -13,7 +13,7 @@ using namespace MathTemplates;
 using namespace GnuplotWrap;
 using namespace RectangularScintillator;
 using namespace Model;
-const size_t ev_n=5000;
+const size_t ev_n=200;
 Vec ScinSize={1000,1000,80},PosStep={ScinSize[0]/8.0,ScinSize[1]/8.0},
 PhmStep_edge={4,4,4};
 int main(int,char**){
@@ -49,7 +49,7 @@ int main(int,char**){
 				hist_fill<<time_diff;
 			}
 		}
-		scintillator.Configure(BC420::Options(8,7));
+		scintillator.Configure(BC420::Reflections(7));
 		RandomUniform<> distrz(0,ScinSize[2]);
 		for(double x=PosStep[0];x<ScinSize[0];x+=PosStep[0])
 			for(double y=PosStep[1];y<ScinSize[1];y+=PosStep[1]){
