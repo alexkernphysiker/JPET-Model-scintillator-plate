@@ -1,6 +1,6 @@
 [submodule "RectangularScintillator"]
 	path = RectangularScintillator
-	url = ../RectangularScintillator.git
+	url = ../../alexkernphysiker/RectangularScintillator.git
 [submodule "math_h"]
 	path = math_h
-	url = ../math_h.git
+	url = ../../alexkernphysiker/math_h.git
