@@ -9,6 +9,7 @@ CMakeCache*
 CMakeFiles
 *kdev*
 *.txt
+*.txt.user
 script.gnuplot
 *.png
 *.cbp
